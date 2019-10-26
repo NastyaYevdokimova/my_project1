@@ -1,25 +1,10 @@
 pipeline {
     agent any
     
-    
-    tools {
-        "org.jenkinsci.plugins.terraform.TerraformInstallation" "terraform"
-    }
-    
-    
+   
     
     parameters {
         string(name: 'WORKSPACE', defaultValue: 'development', description:'setting up workspace for terraform')
-    }
-    environment {
-        TF_HOME = tool('terraform')
-        TF_IN_AUTOMATION = "true"
-        PATH = "$TF_HOME:$PATH"
-        
-        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        TF_VAR_access_key = credentials('AWS_ACCESS_KEY_ID')
-        TF_VAR_secret_key = credentials('AWS_SECRET_ACCESS_KEY')
     }
     stages {
             stage('TerraformInit'){
