@@ -1,38 +1,36 @@
-pipeline {   
-  agent {
-    node {
-      label 'master'
-    }  
+pipeline {
+  agent any
+  environment {
+    SVC_ACCOUNT_KEY = credentials('terraform-auth')
   }
   stages {
-    stage('checkout') {
+  stage('Checkout') {
       steps {
         checkout scm
-        sh 'docker pull hashicorp/terraform:light'
+        sh 'mkdir -p creds'
+        sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/serviceaccount.json'
       }
     }
-    stage('init') {
+	  stage('TF Plan') {
+       steps {
+         container('terraform') {
+           sh 'terraform init'
+           sh 'terraform plan -out myplan'
+         }
+       }
+     }
+	 stage('Approval') {
       steps {
-        sh 'docker run -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light init'
+        script {
+          def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
+        }
       }
     }
-    stage('plan') {
+	    stage('TF Apply') {
       steps {
-        sh 'docker run -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light plan'
-      }
-    }
-    stage('approval') {
-      options {
-        timeout(time: 1, unit: 'HOURS') 
-      }
-      steps {
-        input 'approve the plan to proceed and apply'
-      }
-    }
-    stage('apply') {
-      steps {
-        sh 'docker run -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light apply -auto-approve'
-        cleanWs()
+        container('terraform') {
+          sh 'terraform apply -input=false myplan'
+        }
       }
     }
   }
