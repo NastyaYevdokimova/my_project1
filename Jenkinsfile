@@ -27,7 +27,7 @@ pipeline {
 	stage('TF Apply') {
       steps {
         container('terraform') {
-          sh terraform apply -input=false myplan'
+          sh 'terraform apply -input=false myplan'
         }
       }
     }
