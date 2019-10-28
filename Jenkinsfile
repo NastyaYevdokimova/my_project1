@@ -1,25 +1,35 @@
 pipeline {
   agent any
-  stages {
-  stage('Checkout') {
-
-        sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/cread.json'
+    environment {
+    SVC_ACCOUNT_KEY = credentials('terraform-auth')
+  }
+    stage('Checkout') {
+      steps {
+        checkout scm
+        sh 'echo $SVC_ACCOUNT_KEY | base64 -d > cread.json'
+      }
     }
-	 stage('TF Plan') {
-
+	stage('TF Plan') {
+       steps {
+         container('terraform') {
            sh 'terraform init'
+           sh 'terraform plan -out myplan'
+         }
+       }
      }
-	  stage('Approval') {
+	stage('Approval') {
       steps {
         script {
           def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
         }
       }
     }
-	 stage('TF Apply') {
-
-          sh 'terraform apply -input=false myplan'
-
+	stage('TF Apply') {
+      steps {
+        container('terraform') {
+          sh terraform apply -input=false myplan'
+        }
       }
     }
   }
+
