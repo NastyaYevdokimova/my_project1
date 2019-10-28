@@ -3,11 +3,11 @@ pipeline {
   stages {
   stage('Checkout') {
 
-        sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/serviceaccount.json'
+        echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/cread.json
     }
 	 stage('TF Plan') {
 
-           sh 'terraform init'
+          terraform init
      }
 	  stage('Approval') {
       steps {
@@ -18,7 +18,7 @@ pipeline {
     }
 	 stage('TF Apply') {
 
-          sh 'terraform apply -input=false myplan'
+         terraform apply -input=false myplan
 
       }
     }
