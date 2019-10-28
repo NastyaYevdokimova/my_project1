@@ -14,7 +14,7 @@ pipeline {
        steps {
          
            terraform init
-           terraform plan -out myplan
+           terraform plan 
          }
        }
    
