@@ -3,6 +3,7 @@ pipeline {
     environment {
     SVC_ACCOUNT_KEY = credentials('terraform-auth')
   }
+  stages{
     stage('Checkout') {
       steps {
         checkout scm
@@ -31,5 +32,6 @@ pipeline {
         }
       }
     }
+	}
   }
 
