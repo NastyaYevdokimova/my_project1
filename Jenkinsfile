@@ -14,6 +14,8 @@ pipeline {
        steps {
          
            terraform init
+		  }
+		  steps{
            terraform plan 
          }
        }
