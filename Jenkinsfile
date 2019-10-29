@@ -11,7 +11,7 @@ pipeline {
       }
     }
         stage('Plan') {
-            steps {
+            node {
                 script {
                     currentBuild.displayName = "${version}"
                 }
@@ -22,7 +22,7 @@ pipeline {
         }
 	
 	stage('TF Apply') {
-      steps {
+      node {
        
           terraform apply 
        
