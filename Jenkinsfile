@@ -14,15 +14,13 @@ pipeline {
             steps {
  
                 sh "terraform init -input=false"
-              
-                sh "terraform plan -input=false"
             }
         }
 	
 	stage('TF Apply') {
       steps {
        
-         sh "terraform apply"
+         sh "terraform apply -input=false"
        
       }
     }
