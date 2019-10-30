@@ -5,7 +5,7 @@ provider "google" {
 }
 
 resource "google_compute_instance" "webserver" {
-  name         = "apache-server2"
+  name         = "apache-server3"
   machine_type = "g1-small"
   zone         = "us-central1-a"
 
@@ -14,7 +14,7 @@ resource "google_compute_instance" "webserver" {
       image = "ubuntu-os-cloud/ubuntu-1604-lts"
     }
   }
-  metadata_startup_script = "sudo apt -y update; sudo apt install apache2 -y"
+  metadata_startup_script = "sudo apt -y update; sudo apt install apache3 -y"
   network_interface {
     network = "default"
     access_config {}
@@ -22,7 +22,7 @@ resource "google_compute_instance" "webserver" {
 }
 
 resource "google_compute_firewall" "default" {
-  name    = "apache-firewall"
+  name    = "apache-firewall3"
   network = "default"
 
   allow {
