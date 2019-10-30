@@ -23,7 +23,6 @@ pipeline {
  }
         stage('Plan') {
             steps {
-				sh 'terraform import google_container_cluster.mycluster my-gcp-project/us-east1-a/my-cluster'
                 sh 'terraform init -input=false'
             }
         }
