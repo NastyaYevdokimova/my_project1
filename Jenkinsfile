@@ -10,11 +10,6 @@ pipeline {
         sh 'echo $SVC_ACCOUNT_KEY | base64 -d > cread.json'
       }
     }
-        stage('Plan') {
-            steps {
-
-            }
-        }
 	
 	stage('TF Apply') {
       steps {
