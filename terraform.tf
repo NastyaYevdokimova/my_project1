@@ -5,7 +5,7 @@ provider "google" {
 }
 
 resource "google_compute_instance" "webserver" {
-  name         = "apache-server"
+  name         = "apache-server2"
   machine_type = "g1-small"
   zone         = "us-central1-a"
 
