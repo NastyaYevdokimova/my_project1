@@ -14,11 +14,8 @@ resource "google_compute_instance" "webserver" {
       image = "ubuntu-os-cloud/ubuntu-1604-lts"
     }
   }
-<<<<<<< HEAD
   metadata_startup_script = "sudo apt -y update; sudo apt install apache2 -y; sudo chmod 777 /var/www/html; echo <h1>Simple DevOps project</h1> > /var/www/html/index.html; sudo service apache2 restart;"
-=======
-  metadata_startup_script = "sudo apt -y update; sudo apt install apache2 -y; sudo chmod 777 /var/www/html; echo Simple DevOps project > /var/www/html/index.html;"
->>>>>>> 8878e08220116ac2c0c902fd9b51f32e0a902337
+
   network_interface {
     network = "default"
     access_config {}
