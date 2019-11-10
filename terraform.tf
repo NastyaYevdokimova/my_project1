@@ -14,7 +14,7 @@ resource "google_compute_instance" "webserver" {
       image = "ubuntu-os-cloud/ubuntu-1604-lts"
     }
   }
-  metadata_startup_script = "sudo apt -y update; sudo apt install apache2 -y"
+  metadata_startup_script = "sudo apt -y update; sudo apt install apache2 -y; sudo chmod 644 /var/www/html; echo Simple DevOps project > /var/www/html/index.html"
   network_interface {
     network = "default"
     access_config {}
