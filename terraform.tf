@@ -5,7 +5,7 @@ provider "google" {
 }
 
 resource "google_compute_instance" "webserver" {
-  name         = "apache-server4"
+  name         = "apache-server5"
   machine_type = "g1-small"
   zone         = "us-central1-a"
 
@@ -23,7 +23,7 @@ resource "google_compute_instance" "webserver" {
 }
 
 resource "google_compute_firewall" "default" {
-  name    = "apache-firewall4"
+  name    = "apache-firewall5"
   network = "default"
 
   allow {
